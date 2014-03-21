@@ -185,9 +185,7 @@ abstract class PHPBootstrap {
 		//Stringify it and hash it
 		return	hash("crc32",
 				var_export($config, true).
-				" <- Compatible config file for James-Swift/PHPBootsrap ".
-				self::VERSION.
-				" by James Swift"
+				" <- Compatible config file for James-Swift/PHPBootsrap by James Swift"
 			);
 	}
 	
