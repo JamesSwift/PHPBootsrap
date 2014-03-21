@@ -22,10 +22,9 @@ namespace JamesSwift\ImageManager;
 
 abstract class PHPBootstrap {
 
-	protected $_config;
+	abstract public function loadDefaultConfig($clearOld=true);
 	
-	
-	abstract public function loadDefaultConfig($config);
+	abstract protected function _sanitizeConfig($config);
 	
 	public function __construct($config=null){
 		//Load default config
@@ -64,6 +63,83 @@ abstract class PHPBootstrap {
 		
 		return $path;
 	
+	}
+	
+	protected function _getConfigFromFile($file){
+		
+		//Does the file exist?
+		if (!is_file($file)) return false;
+
+		//Atempt to decode it
+		$config = json_decode(file_get_contents($file),true);
+		
+		//Return false on failure
+		return ($config === null) ? false : $config;
+	}
+	
+	protected function _loadSignedConfig($config){
+		
+		//Check we're dealing with a signed config
+		if (!isset($config['signedHash']))
+			return false;
+
+		//Recheck hash to see if it is valid
+		if ($this->_signConfig($config)!==$config['signedHash'])
+			return false;
+
+		//Load the signed (previously checked) variables
+		$this->_forceMergeConfig($config);
+
+		return true;
+		
+	}
+	
+	protected function _forceMergeConfig($config){
+		
+		//Check $config is an array
+		if (!is_array($config))
+			throw new \Exception("Unable to load config. Parameter 1 must be an array");
+	
+		//Merge with $this
+		$newConfig=array();
+		foreach($config as $id=>$value){
+			$newConfig[$id]=$value+$this->$id;
+			$this->$id=$value+$this->$id;
+		}
+		
+		return $newConfig;
+	}
+	
+	public function loadConfig($loadFrom, $clearOld=false, $saveChanges=true){
+
+		//If they called this function with no config, just return null
+		if ($loadFrom===null) return null;
+				
+		//If we have been passed an array, load that
+		if (is_array($loadFrom)) {
+			$config=$loadFrom;
+			
+		//If not, try to load from JSON file
+		} else if (is_string($loadFrom) && is_file($loadFrom)) {
+			$config=$this->_getConfigFromFile($loadFrom);
+			if ($config===false)
+				throw new \Exception("Unable to parse config file: ".$loadFrom);
+		}
+		
+		//Were we able to load $config from somewhere?
+		if (!isset($config)) 
+			throw new \Exception("Unable to load configuration. Please pass a config array or a valid absolute path to a config file.");
+
+		//Reset the class if requested
+		if ($clearOld===true) 
+			$this->loadDefaultConfig(true);
+		
+		//Has this configuration been signed previously? (if so load it without error checking to save CPU cycles)
+		if (isset($config['signedHash']) && $this->_loadSignedConfig($config) )
+			return $config;
+
+		//Process configuration
+		return $this->_forceMergeConfig($this->_sanitizeConfig($config));
 	}
 }
 
