@@ -18,7 +18,7 @@
  * @copyright Copyright 2013 James Swift (Creative Commons: Attribution - Share Alike - 3.0)
  */
 
-namespace JamesSwift\ImageManager;
+namespace JamesSwift\PHPBootstrap;
 
 abstract class PHPBootstrap {
 	
