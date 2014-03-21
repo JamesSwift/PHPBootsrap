@@ -21,7 +21,7 @@
 namespace JamesSwift\ImageManager;
 
 abstract class PHPBootstrap {
-
+	
 	abstract public function loadDefaultConfig($clearOld=true);
 	
 	abstract protected function _sanitizeConfig($config);
@@ -87,6 +87,8 @@ abstract class PHPBootstrap {
 		if ($this->_signConfig($config)!==$config['signedHash'])
 			return false;
 
+		unset($config['signedHash']);
+		
 		//Load the signed (previously checked) variables
 		$this->_forceMergeConfig($config);
 
@@ -138,8 +140,83 @@ abstract class PHPBootstrap {
 		if (isset($config['signedHash']) && $this->_loadSignedConfig($config) )
 			return $config;
 
-		//Process configuration
-		return $this->_forceMergeConfig($this->_sanitizeConfig($config));
+		//Sanitize configuration
+		$sanitizedConfig = $this->_sanitizeConfig($config);
+		
+		//Apply the config
+		$this->_forceMergeConfig($sanitizedConfig);
+		
+		//Check if we should save changes back to the file
+		if ($saveChanges===true && is_string($loadFrom)){
+
+			//Sign this new config
+			$sanitizedConfig['signedHash'] = $this->_signConfig($sanitizedConfig);
+
+			//write it back to disk
+			file_put_contents($loadFrom, json_encode($sanitizedConfig, JSON_PRETTY_PRINT));
+		}
+	}
+	
+	public function getConfig(){
+		return get_object_vars($this);
+	}
+	
+	public function getSignedConfig(){
+		
+		//Get config to sign
+		$config = $this->getConfig();
+
+		//Sign the config
+		$config['signedHash'] = $this->_signConfig($config);
+		
+		//Sign and return it
+		return $config;
+	}
+	
+	protected function _signConfig($config){
+		
+		//Check the config array actually exists
+		if (!(isset($config) && is_array($config)))
+			return false;
+		
+		//Remove any previous signature
+		unset($config['signedHash']);
+	
+		//Stringify it and hash it
+		return	hash("crc32",
+				var_export($config, true).
+				" <- Compatible config file for James-Swift/PHPBootsrap ".
+				self::VERSION.
+				" by James Swift"
+			);
+	}
+	
+	public function saveConfig($file, $overwrite=false, $format="json", $varName="PHPBootsrapConfigArray"){
+		
+		if ($overwrite===false && is_file($file)) 
+			throw new \Exception("Unable to save settings. File '".$file."' already exists, and method is in non-overwrite mode.");
+		
+		if ($format==="json"){
+			if (file_put_contents($file, json_encode($this->getSignedConfig(), JSON_PRETTY_PRINT) )!==false )
+				return true;
+		
+		} else if ($format==="php"){
+			if (file_put_contents($file, "<"."?php \$".$varName." =\n".var_export($this->getSignedConfig(), true).";\n?".">")!==false )
+				return true;
+		}
+		
+		throw new \Exception("An unknown error occured and the settings could not be saved to file: ".$file);
+	}
+	
+	public function set($setting, $value){
+		$this->$settings=$value;
+	}
+	
+	public function get($setting){
+		if (isset($setting) && isset($this->$setting) ){
+			return $this->$setting;
+		}
+		return null;
 	}
 }
 
