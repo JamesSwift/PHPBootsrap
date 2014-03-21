@@ -22,7 +22,7 @@ namespace JamesSwift\PHPBootstrap;
 
 abstract class PHPBootstrap {
 	
-	abstract public function loadDefaultConfig($clearOld=true);
+	abstract public function loadDefaultConfig();
 	
 	abstract protected function _sanitizeConfig($config);
 	
@@ -134,7 +134,7 @@ abstract class PHPBootstrap {
 
 		//Reset the class if requested
 		if ($clearOld===true) 
-			$this->loadDefaultConfig(true);
+			$this->loadDefaultConfig();
 		
 		//Has this configuration been signed previously? (if so load it without error checking to save CPU cycles)
 		if (isset($config['signedHash']) && $this->_loadSignedConfig($config) )
