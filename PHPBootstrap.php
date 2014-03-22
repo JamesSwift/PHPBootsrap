@@ -11,10 +11,10 @@
  * keep the message below intact:
  * 
  * Copyright 2014 James Swift (Creative Commons: Attribution - Share Alike - 3.0)
- * https://github.com/James-Swift/PHPBootstrap
+ * https://github.com/JamesSwift/PHPBootstrap
  * 
  * @author James Swift <swiftscripts@gmail.com>
- * @package James-Swift/PHPBootstrap
+ * @package JamesSwift/PHPBootstrap
  * @copyright Copyright 2013 James Swift (Creative Commons: Attribution - Share Alike - 3.0)
  */
 
@@ -185,7 +185,7 @@ abstract class PHPBootstrap {
 		//Stringify it and hash it
 		return	hash("crc32",
 				var_export($config, true).
-				" <- Compatible config file for James-Swift/PHPBootsrap by James Swift"
+				" <- Compatible config file for JamesSwift/PHPBootsrap by James Swift"
 			);
 	}
 	
