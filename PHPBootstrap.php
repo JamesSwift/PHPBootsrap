@@ -15,7 +15,7 @@
  * 
  * @author James Swift <swiftscripts@gmail.com>
  * @package JamesSwift/PHPBootstrap
- * @copyright Copyright 2013 James Swift (Creative Commons: Attribution - Share Alike - 3.0)
+ * @copyright Copyright 2014 James Swift (Creative Commons: Attribution - Share Alike - 3.0)
  */
 
 namespace JamesSwift\PHPBootstrap;
