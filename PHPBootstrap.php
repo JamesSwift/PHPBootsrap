@@ -42,11 +42,14 @@ abstract class PHPBootstrap {
 	public function sanitizeFilePath($path, $removeLeading=false, $addTrailing=false){
 
 		//Check we're dealing with a path
-		if (!isset($path) || !is_string($path) || $path==="")
+		if (!isset($path) || !is_string($path) || $path==="") {
 			throw new \Exception("Cannot sanitize file-path. It must be a non-empty string.");
+		}
 		
 		//Add trailing slash
-		if ($addTrailing===true) $path=$path."/";
+		if ($addTrailing===true) {
+			$path=$path."/";
+		}
 		
 		//Turn all slashes round the same way and remove doubles
 		$path=preg_replace('~[\\\\|\\/]+~', '/', $path);
@@ -55,12 +58,14 @@ abstract class PHPBootstrap {
 		$path=substr(str_replace("/./","/",$path."/"), 0, -1);
 
 		//Check path for directory traversing
-		if (strpos("/".$path."/", "/../")!==false)
+		if (strpos("/".$path."/", "/../")!==false) {
 			throw new \Exception("Cannot sanitize file path: '".$path."'. It appears to contain an attempt at directory traversal which may be a security breach.");
-
+		}
+		
 		//Remove leading slash
-		if ($removeLeading===true && substr($path,0,1)==="/")
+		if ($removeLeading===true && substr($path,0,1)==="/"){
 			$path=substr($path,1);
+		}
 		
 		return $path;
 	
