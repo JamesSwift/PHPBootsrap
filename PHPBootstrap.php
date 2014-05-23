@@ -48,8 +48,8 @@ abstract class PHPBootstrap {
 		//Add trailing slash
 		if ($addTrailing===true) $path=$path."/";
 		
-		//Turn all slashes round the same way
-		$path=str_replace(Array("\\","/",'\\',"//"),"/",$path);
+		//Turn all slashes round the same way and remove doubles
+		$path=preg_replace('~[\\\\|\\/]+~', '/', $path);
 		
 		//Remove redundant references to ./
 		$path=substr(str_replace("/./","/",$path."/"), 0, -1);
