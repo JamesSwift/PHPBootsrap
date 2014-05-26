@@ -14,7 +14,7 @@
  * https://github.com/JamesSwift/PHPBootstrap
  * 
  * @author James Swift <swiftscripts@gmail.com>
- * @version v0.1.0
+ * @version v0.1.1
  * @package JamesSwift/PHPBootstrap
  * @copyright Copyright 2014 James Swift (Creative Commons: Attribution - Share Alike - 3.0)
  */
@@ -115,10 +115,11 @@ abstract class PHPBootstrap {
 			//If array, try to merge
 			if (is_array($value)){
 				$newConfig[$id]=$this->$id=$value+$this->$id;
-			}
-			
+				
 			//If not, just override
-			$newConfig[$id]=$this->$id=$value;
+			} else {
+				$newConfig[$id]=$this->$id=$value;
+			}
 		
 		}
 		
