@@ -106,8 +106,15 @@ abstract class PHPBootstrap {
 		//Merge with $this
 		$newConfig=array();
 		foreach($config as $id=>$value){
-			$newConfig[$id]=$value+$this->$id;
-			$this->$id=$value+$this->$id;
+			
+			//If array, try to merge
+			if (is_array($value)){
+				$newConfig[$id]=$this->$id=$value+$this->$id;
+			}
+			
+			//If not, just override
+			$newConfig[$id]=$this->$id=$value;
+		
 		}
 		
 		return $newConfig;
