@@ -1,5 +1,5 @@
 <h1>
-PHPBootstrap v0.1.1
+PHPBootstrap v0.1.2
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US" style="float:right;"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a>
 </h1>
 
