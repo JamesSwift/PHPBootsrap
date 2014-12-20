@@ -232,7 +232,7 @@ abstract class PHPBootstrap {
 	}
 	
 	public function set($setting, $value){
-		$this->$settings=$value;
+		$this->$setting=$value;
 	}
 	
 	public function get($setting){
