@@ -8,8 +8,6 @@ For example my <a href="https://github.com/JamesSwift/SWDAPI">SWDAPI</a> and
 <a href="https://github.com/JamesSwift/ImageManager">ImageManager</a> modules both rely on this class 
 to handle the following tasks:
 
-- Setting
-- Getting
 - Loading and parsing config  files
 - Saving config files
 - "Signing" config files to allow sanitisation checks to be bypassed next time the file is loaded.
