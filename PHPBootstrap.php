@@ -14,7 +14,7 @@
  * https://github.com/JamesSwift/PHPBootstrap
  * 
  * @author James Swift <swiftscripts@gmail.com>
- * @version v0.1.3
+ * @version v0.1.4
  * @package JamesSwift/PHPBootstrap
  * @copyright Copyright 2014 James Swift (Creative Commons: Attribution - Share Alike - 3.0)
  */
