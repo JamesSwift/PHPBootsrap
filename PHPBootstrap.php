@@ -73,12 +73,12 @@ abstract class PHPBootstrap {
 	
 	protected function _getConfigFromFile($file){
 		
-		//Does the file exist?
+		//Does the file exist
 		if (!is_file($file)){ return false; }
 
 		//Atempt to decode it
 		$config = json_decode(file_get_contents($file),true);
-		
+	
 		//Return false on failure
 		return ($config === null) ? false : $config;
 	}
@@ -133,13 +133,16 @@ abstract class PHPBootstrap {
 
 		//If they called this function with no config, just return null
 		if ($loadFrom===null) { return null; }
-				
+		
 		//If we have been passed an array, load that
 		if (is_array($loadFrom)) {
 			$config=$loadFrom;
 			
 		//If not, try to load from JSON file
-		} else if (is_string($loadFrom) && is_file($loadFrom)) {
+		} else if (is_string($loadFrom)){
+			if (!is_file($loadFrom)) {
+				throw new \Exception("Passed config file does not exist: ".$loadFrom);
+			}
 			$config=$this->_getConfigFromFile($loadFrom);
 			if ($config===false){
 				throw new \Exception("Unable to parse config file: ".$loadFrom);
