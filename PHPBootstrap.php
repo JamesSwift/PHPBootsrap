@@ -170,15 +170,18 @@ abstract class PHPBootstrap {
 		//Apply the config
 		$this->_forceMergeConfig($sanitizedConfig);
 		
+		//Sign this new config
+		$sanitizedConfig['signedHash'] = $this->_signConfig($sanitizedConfig);		
+		
 		//Check if we should save changes back to the file
 		if ($saveChanges===true && is_string($loadFrom)){
-
-			//Sign this new config
-			$sanitizedConfig['signedHash'] = $this->_signConfig($sanitizedConfig);
 
 			//write it back to disk
 			file_put_contents($loadFrom, json_encode($sanitizedConfig, JSON_PRETTY_PRINT));
 		}
+		
+		//Return the sanitized and signed config
+		return $sanitizedConfig;
 	}
 	
 	public function getConfig(){
