@@ -3,8 +3,8 @@ PHPBootstrap v0.1.2
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US" style="float:right;"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a>
 </h1>
 
-PHPBootstrap is an abstract php class, intended to be used a starting point when writing modules. 
-For example my <a href="https://github.com/JamesSwift/PHPAPI">PHPAPI</a> and 
+PHPBootstrap is an abstract php class, intended to be used as a starting point when writing modules. 
+For example my <a href="https://github.com/JamesSwift/SWDAPI">SWDAPI</a> and 
 <a href="https://github.com/JamesSwift/ImageManager">ImageManager</a> modules both rely on this class 
 to handle the following tasks:
 
@@ -32,8 +32,8 @@ To use PHPBootstrap in your class:
     
     	//You also need to define this method
     	protected function _sanitizeConfig($config){
-    		//When MyClass::loadConfig() is called, it passes
-    		//the config array to this method which should check
+		//When MyClass::loadConfig() is called, it passes
+		//the config array to this method which should check
 		//it for errors, sanitize it and return it
 		return $config;
     	}
