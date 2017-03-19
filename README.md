@@ -1,5 +1,5 @@
 <h1>
-PHPBootstrap v0.1.2
+PHPBootstrap v0.1.3
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US" style="float:right;"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a>
 </h1>
 
@@ -48,8 +48,6 @@ Just doing the above would then give you class lots of powerful tools, for examp
     $MyClass = new MyClass(array("publicVar"=>"something"));
 
     $MyClass->loadConfig("extraConfig.json");
-
-    $MyClass->set("_privateVar", "blah");
 
     $MyClass->saveConfig("enewConfig.json");
 

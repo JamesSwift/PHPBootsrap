@@ -14,7 +14,7 @@
  * https://github.com/JamesSwift/PHPBootstrap
  * 
  * @author James Swift <swiftscripts@gmail.com>
- * @version v0.1.2
+ * @version v0.1.3
  * @package JamesSwift/PHPBootstrap
  * @copyright Copyright 2014 James Swift (Creative Commons: Attribution - Share Alike - 3.0)
  */
@@ -234,16 +234,6 @@ abstract class PHPBootstrap {
 		throw new \Exception("An unknown error occured and the settings could not be saved to file: ".$file);
 	}
 	
-	public function set($setting, $value){
-		$this->$setting=$value;
-	}
-	
-	public function get($setting){
-		if (isset($setting) && isset($this->$setting) ){
-			return $this->$setting;
-		}
-		return null;
-	}
 }
 
 
