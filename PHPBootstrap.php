@@ -177,7 +177,7 @@ abstract class PHPBootstrap {
 		if ($saveChanges===true && is_string($loadFrom)){
 
 			//write it back to disk
-			file_put_contents($loadFrom, json_encode($sanitizedConfig, JSON_PRETTY_PRINT));
+			file_put_contents($loadFrom, json_encode($sanitizedConfig, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 		}
 		
 		//Return the sanitized and signed config
