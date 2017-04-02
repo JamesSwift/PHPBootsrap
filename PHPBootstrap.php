@@ -224,7 +224,7 @@ abstract class PHPBootstrap {
 		}
 		
 		if ($format==="json"){
-			if (file_put_contents($file, json_encode($this->getSignedConfig(), JSON_PRETTY_PRINT) )!==false ) {
+			if (file_put_contents($file, json_encode($this->getSignedConfig(), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) )!==false ) {
 				return true;
 			}
 		
